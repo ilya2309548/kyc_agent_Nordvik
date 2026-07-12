@@ -208,9 +208,12 @@ confidence. Расхождение «экстрактор ↔ документ»
 ×10 за задачу, которую решает малая модель; извлечение и рисковый анализ малой
 моделью — терять точность там, где она критична.
 
-**Решение:** модель каждого шага задаётся конфигурацией (env), по умолчанию:
+**Решение:** модель каждого шага задаётся конфигурацией (env). Дефолт кода —
+`fake:*` (оффлайн-режим: система обязана подниматься и работать без API-ключей,
+см. DoD); рекомендованная продовая конфигурация задаётся в `.env` и приведена
+в `.env.example`:
 
-| Шаг | Переменная | Дефолт | Обоснование |
+| Шаг | Переменная | Прод-рекомендация | Обоснование |
 |---|---|---|---|
 | router | `MODEL_ROUTER` | `anthropic:claude-haiku-4-5` | классификация с закрытым множеством классов — задача малой модели |
 | extractor | `MODEL_EXTRACTOR` | `anthropic:claude-sonnet-5` | точность извлечения → прямо влияет на решение |
@@ -287,10 +290,12 @@ KYCState (TypedDict, total=False)
 ├── decision: Decision | None
 │       {outcome: "approve"|"reject"|"escalate", decided_by: "system"|"human",
 │        reason_codes: list[str], rationale: str, reviewer: str | None}
-├── errors: list[ProcessingError]
+├── errors: Annotated[list[ProcessingError], operator.add]
 │       {node, error_type, message, attempt, timestamp}
-├── retry_counts: dict[str, int]        # bounded execution, по узлам
-└── degraded: bool                      # включён fallback-путь к человеку
+├── retry_counts: Annotated[dict[str, int], merge]   # bounded execution, по узлам
+└── degraded_reasons: Annotated[list[str], operator.add]
+        # кейс деградирован ⇔ список непуст; additive-редьюсер, т.к.
+        # воркеры извлечения пишут конкурентно в одном суперешаге
 ```
 
 ### 6.3. Схемы извлечения (structured output)
@@ -415,8 +420,16 @@ orchestrator ──(неполный комплект)──► decision_gate   
 validator → risk_scorer → decision_gate
 decision_gate ─┬─► auto_decision → finalize → END
                └─► human_review → finalize → END
-{router, extract_document, validator, risk_scorer} ──(устойчивый сбой)──► handle_error → human_review
+{router, validator} ──(устойчивый сбой)──► handle_error → decision_gate
 ```
+
+Инвариант: **все** решения, включая деградацию при сбоях, проходят через
+единственную точку — `decision_gate` (матрица 7.4), поэтому `handle_error`
+ведёт в `decision_gate`, а не напрямую в `human_review`. Сбой отдельного
+воркера `extract_document` не убивает кейс: воркер фиксирует
+`extraction_error` + причину деградации, и кейс уходит человеку через ту же
+матрицу. Признак деградации — непустой список `degraded_reasons` в состоянии
+(воркеры пишут его конкурентно через additive-редьюсер).
 
 ### 8.3. Контракт HITL
 
