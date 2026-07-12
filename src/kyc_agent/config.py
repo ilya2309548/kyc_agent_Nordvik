@@ -33,9 +33,7 @@ class Settings(BaseSettings):
     validator_model: str = Field(
         "fake:validator", validation_alias=AliasChoices("MODEL_VALIDATOR", "VALIDATOR_MODEL")
     )
-    risk_model: str = Field(
-        "fake:risk", validation_alias=AliasChoices("MODEL_RISK", "RISK_MODEL")
-    )
+    risk_model: str = Field("fake:risk", validation_alias=AliasChoices("MODEL_RISK", "RISK_MODEL"))
     fallback_model: str = Field(
         "fake:fallback", validation_alias=AliasChoices("MODEL_FALLBACK", "FALLBACK_MODEL")
     )

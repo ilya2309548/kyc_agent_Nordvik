@@ -40,9 +40,7 @@ class KYCPackage(BaseModel):
 
 
 REQUIRED_DOCS_BY_CUSTOMER: dict[CustomerType, frozenset[DocumentType]] = {
-    CustomerType.INDIVIDUAL: frozenset(
-        {DocumentType.ID_DOCUMENT, DocumentType.PROOF_OF_ADDRESS}
-    ),
+    CustomerType.INDIVIDUAL: frozenset({DocumentType.ID_DOCUMENT, DocumentType.PROOF_OF_ADDRESS}),
     CustomerType.BUSINESS: frozenset(
         {DocumentType.BUSINESS_REGISTRATION, DocumentType.UBO_DECLARATION}
     ),
