@@ -154,7 +154,9 @@ def decide_gate(
     degraded: bool,
 ) -> Decision:
     """Deterministic decision matrix (SPEC 7.4), evaluated top-down."""
-    if completeness_flag is not None:
+    if completeness_flag is not None and not degraded:
+        # A degraded package (e.g. unreadable document) is never auto-rejected
+        # as incomplete: the unreadable file may be the missing document.
         return Decision(
             outcome=DecisionOutcome.REJECT,
             decided_by=DecidedBy.SYSTEM,

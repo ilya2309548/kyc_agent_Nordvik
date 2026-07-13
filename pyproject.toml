@@ -48,6 +48,10 @@ src = ["src", "tests", "eval"]
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "TCH"]
 
+[tool.ruff.lint.per-file-ignores]
+# Synthetic-data generator: long literal lines are data, not code style.
+"eval/generate_golden_set.py" = ["E501"]
+
 [tool.mypy]
 python_version = "3.12"
 strict = true

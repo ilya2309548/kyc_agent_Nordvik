@@ -1,0 +1,657 @@
+{
+  "description": "Synthetic KYC golden set for Nordvik eval (no real personal data)",
+  "reference_date": "2026-07-13",
+  "cases": [
+    {
+      "case_id": "clean-individual-1",
+      "description": "Typical clean individual onboarding",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Anna Virtanen",
+          "date_of_birth": "1991-03-14",
+          "address": "Kalevankatu 12 A 5, 00100 Helsinki",
+          "expected_monthly_volume_eur": 2500
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF FINLAND\nIDENTITY CARD\nFull name: Anna Virtanen\nDate of birth: 14.03.1991\nDocument number: FIN-8842517\nDate of expiry: 01.05.2030\nNationality: FI\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "HELEN OY\nELECTRICITY INVOICE\nCustomer: Anna Virtanen\nService address: Kalevankatu 12 A 5, 00100 Helsinki\nInvoice date: 10.05.2026\nIssuer: Helen Oy\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "approve",
+        "decided_by": "system",
+        "escalation": false,
+        "reason_codes_include": [
+          "ALL_CHECKS_PASSED"
+        ],
+        "fields": {
+          "doc-id": {
+            "full_name": "Anna Virtanen",
+            "date_of_birth": "1991-03-14",
+            "document_number": "FIN-8842517",
+            "expiry_date": "2030-05-01",
+            "nationality": "FI"
+          },
+          "doc-poa": {
+            "full_name": "Anna Virtanen",
+            "address": "Kalevankatu 12 A 5, 00100 Helsinki",
+            "issue_date": "2026-05-10",
+            "issuer": "Helen Oy"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "clean-individual-2",
+      "description": "Clean individual, bank statement as proof of address",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Mikael Korhonen",
+          "date_of_birth": "1987-11-02",
+          "address": "Itamerenkatu 3 B 21, 00180 Helsinki",
+          "expected_monthly_volume_eur": 4200
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF FINLAND\nIDENTITY CARD\nFull name: Mikael Korhonen\nDate of birth: 02.11.1987\nDocument number: FIN-5521904\nDate of expiry: 17.09.2031\nNationality: FI\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "NORDEA BANK ABP\nBANK STATEMENT\nAccount holder: Mikael Korhonen\nAddress: Itamerenkatu 3 B 21, 00180 Helsinki\nStatement date: 01.06.2026\nIssuer: Nordea Bank Abp\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "approve",
+        "decided_by": "system",
+        "escalation": false,
+        "reason_codes_include": [
+          "ALL_CHECKS_PASSED"
+        ],
+        "fields": {
+          "doc-id": {
+            "full_name": "Mikael Korhonen",
+            "date_of_birth": "1987-11-02",
+            "document_number": "FIN-5521904",
+            "expiry_date": "2031-09-17",
+            "nationality": "FI"
+          },
+          "doc-poa": {
+            "full_name": "Mikael Korhonen",
+            "address": "Itamerenkatu 3 B 21, 00180 Helsinki",
+            "issue_date": "2026-06-01",
+            "issuer": "Nordea Bank Abp"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "clean-individual-3",
+      "description": "Clean individual onboarding",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Sofia Lehtinen",
+          "date_of_birth": "1995-06-27",
+          "address": "Puistokatu 8 C 14, 20100 Turku",
+          "expected_monthly_volume_eur": 1800
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF FINLAND\nIDENTITY CARD\nFull name: Sofia Lehtinen\nDate of birth: 27.06.1995\nDocument number: FIN-7710382\nDate of expiry: 23.02.2029\nNationality: FI\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "TURKU ENERGIA\nELECTRICITY INVOICE\nCustomer: Sofia Lehtinen\nService address: Puistokatu 8 C 14, 20100 Turku\nInvoice date: 05.06.2026\nIssuer: Turku Energia\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "approve",
+        "decided_by": "system",
+        "escalation": false,
+        "reason_codes_include": [
+          "ALL_CHECKS_PASSED"
+        ],
+        "fields": {
+          "doc-id": {
+            "full_name": "Sofia Lehtinen",
+            "date_of_birth": "1995-06-27",
+            "document_number": "FIN-7710382",
+            "expiry_date": "2029-02-23",
+            "nationality": "FI"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "clean-individual-4",
+      "description": "Clean individual onboarding",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Ville Niemi",
+          "date_of_birth": "1983-01-19",
+          "address": "Rautatienkatu 21 A 2, 33100 Tampere",
+          "expected_monthly_volume_eur": 3100
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF FINLAND\nIDENTITY CARD\nFull name: Ville Niemi\nDate of birth: 19.01.1983\nDocument number: FIN-3308571\nDate of expiry: 11.11.2028\nNationality: FI\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "TAMPEREEN SAHKOLAITOS\nELECTRICITY INVOICE\nCustomer: Ville Niemi\nService address: Rautatienkatu 21 A 2, 33100 Tampere\nInvoice date: 20.05.2026\nIssuer: Tampereen Sahkolaitos\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "approve",
+        "decided_by": "system",
+        "escalation": false,
+        "reason_codes_include": [
+          "ALL_CHECKS_PASSED"
+        ],
+        "fields": {
+          "doc-id": {
+            "full_name": "Ville Niemi",
+            "date_of_birth": "1983-01-19",
+            "document_number": "FIN-3308571",
+            "expiry_date": "2028-11-11",
+            "nationality": "FI"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "clean-individual-5",
+      "description": "Clean individual onboarding",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Laura Makela",
+          "date_of_birth": "1990-08-08",
+          "address": "Satamakatu 5 D 33, 90100 Oulu",
+          "expected_monthly_volume_eur": 2200
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF FINLAND\nIDENTITY CARD\nFull name: Laura Makela\nDate of birth: 08.08.1990\nDocument number: FIN-9174205\nDate of expiry: 30.06.2032\nNationality: FI\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "OP BANK\nBANK STATEMENT\nAccount holder: Laura Makela\nAddress: Satamakatu 5 D 33, 90100 Oulu\nStatement date: 15.06.2026\nIssuer: OP Bank\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "approve",
+        "decided_by": "system",
+        "escalation": false,
+        "reason_codes_include": [
+          "ALL_CHECKS_PASSED"
+        ],
+        "fields": {
+          "doc-id": {
+            "full_name": "Laura Makela",
+            "date_of_birth": "1990-08-08",
+            "document_number": "FIN-9174205",
+            "expiry_date": "2032-06-30",
+            "nationality": "FI"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "address-mismatch-warning",
+      "description": "Address on the bill differs from the declared one: warning only, still auto",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Noora Hakala",
+          "date_of_birth": "1992-04-03",
+          "address": "Koulukatu 17 B 9, 65100 Vaasa",
+          "expected_monthly_volume_eur": 2000
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF FINLAND\nIDENTITY CARD\nFull name: Noora Hakala\nDate of birth: 03.04.1992\nDocument number: FIN-6650913\nDate of expiry: 14.03.2030\nNationality: FI\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "HELEN OY\nELECTRICITY INVOICE\nCustomer: Noora Hakala\nService address: Vanha Maantie 2 F 51, 02650 Espoo\nInvoice date: 01.06.2026\nIssuer: Helen Oy\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "approve",
+        "decided_by": "system",
+        "escalation": false,
+        "reason_codes_include": [
+          "ALL_CHECKS_PASSED"
+        ],
+        "fields": {}
+      }
+    },
+    {
+      "case_id": "expired-document",
+      "description": "ID document expired: deterministic auto-reject",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Jukka Salminen",
+          "date_of_birth": "1979-12-30",
+          "address": "Kirkkokatu 4 A 1, 70100 Kuopio",
+          "expected_monthly_volume_eur": 2600
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF FINLAND\nIDENTITY CARD\nFull name: Jukka Salminen\nDate of birth: 30.12.1979\nDocument number: FIN-2209166\nDate of expiry: 01.05.2024\nNationality: FI\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "KUOPION ENERGIA\nELECTRICITY INVOICE\nCustomer: Jukka Salminen\nService address: Kirkkokatu 4 A 1, 70100 Kuopio\nInvoice date: 02.06.2026\nIssuer: Kuopion Energia\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "reject",
+        "decided_by": "system",
+        "escalation": false,
+        "reason_codes_include": [
+          "DOCUMENT_EXPIRED"
+        ],
+        "fields": {}
+      }
+    },
+    {
+      "case_id": "incomplete-package",
+      "description": "Proof of address missing: auto-reject, client may resubmit",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Emil Nyberg",
+          "date_of_birth": "1998-02-15",
+          "address": "Linnankatu 30 E 44, 20100 Turku",
+          "expected_monthly_volume_eur": 1500
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF FINLAND\nIDENTITY CARD\nFull name: Emil Nyberg\nDate of birth: 15.02.1998\nDocument number: FIN-4127850\nDate of expiry: 09.01.2031\nNationality: FI\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "reject",
+        "decided_by": "system",
+        "escalation": false,
+        "reason_codes_include": [
+          "INCOMPLETE_PACKAGE"
+        ],
+        "fields": {}
+      }
+    },
+    {
+      "case_id": "name-mismatch-critical",
+      "description": "Declared name does not match the ID document: mandatory escalation",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Elena Sokolova",
+          "date_of_birth": "1988-07-21",
+          "address": "Bulevardi 11 A 7, 00120 Helsinki",
+          "expected_monthly_volume_eur": 3000
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF ESTONIA\nIDENTITY CARD\nFull name: Boris Petrov\nDate of birth: 21.07.1988\nDocument number: EST-1190447\nDate of expiry: 28.10.2029\nNationality: EE\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "HELEN OY\nELECTRICITY INVOICE\nCustomer: Elena Sokolova\nService address: Bulevardi 11 A 7, 00120 Helsinki\nInvoice date: 03.06.2026\nIssuer: Helen Oy\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "escalate",
+        "decided_by": "human",
+        "escalation": true,
+        "reason_codes_include": [
+          "CRITICAL_MISMATCH"
+        ],
+        "fields": {}
+      }
+    },
+    {
+      "case_id": "sanctions-hit",
+      "description": "Applicant matches the sanctions registry: mandatory escalation",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Viktor Salo",
+          "date_of_birth": "1969-11-03",
+          "address": "Tehtaankatu 19 B 16, 00150 Helsinki",
+          "expected_monthly_volume_eur": 4000
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF FINLAND\nIDENTITY CARD\nFull name: Viktor Salo\nDate of birth: 03.11.1969\nDocument number: FIN-1055821\nDate of expiry: 07.07.2030\nNationality: FI\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "HELEN OY\nELECTRICITY INVOICE\nCustomer: Viktor Salo\nService address: Tehtaankatu 19 B 16, 00150 Helsinki\nInvoice date: 11.06.2026\nIssuer: Helen Oy\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "escalate",
+        "decided_by": "human",
+        "escalation": true,
+        "reason_codes_include": [
+          "SANCTIONS_HIT"
+        ],
+        "fields": {}
+      }
+    },
+    {
+      "case_id": "pep-match",
+      "description": "Applicant is a politically exposed person: mandatory escalation",
+      "typical": false,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Maarika Kask",
+          "date_of_birth": "1975-05-16",
+          "address": "Narva mnt 7-12, 10117 Tallinn",
+          "expected_monthly_volume_eur": 5200
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF ESTONIA\nIDENTITY CARD\nFull name: Maarika Kask\nDate of birth: 16.05.1975\nDocument number: EST-8834012\nDate of expiry: 19.04.2031\nNationality: EE\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "EESTI ENERGIA\nELECTRICITY INVOICE\nCustomer: Maarika Kask\nService address: Narva mnt 7-12, 10117 Tallinn\nInvoice date: 07.06.2026\nIssuer: Eesti Energia\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "escalate",
+        "decided_by": "human",
+        "escalation": true,
+        "reason_codes_include": [
+          "PEP_MATCH"
+        ],
+        "fields": {}
+      }
+    },
+    {
+      "case_id": "high-volume",
+      "description": "Declared monthly volume above the individual threshold: mandatory escalation",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Tomas Berg",
+          "date_of_birth": "1981-09-09",
+          "address": "Norra Esplanaden 25 A 3, 00100 Helsinki",
+          "expected_monthly_volume_eur": 15000
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "KINGDOM OF SWEDEN\nIDENTITY CARD\nFull name: Tomas Berg\nDate of birth: 09.09.1981\nDocument number: SWE-6614708\nDate of expiry: 22.08.2030\nNationality: SE\n"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "NORDEA BANK ABP\nBANK STATEMENT\nAccount holder: Tomas Berg\nAddress: Norra Esplanaden 25 A 3, 00100 Helsinki\nStatement date: 28.05.2026\nIssuer: Nordea Bank Abp\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "escalate",
+        "decided_by": "human",
+        "escalation": true,
+        "reason_codes_include": [
+          "HIGH_VOLUME"
+        ],
+        "fields": {}
+      }
+    },
+    {
+      "case_id": "corrupted-document",
+      "description": "Unreadable ID scan: graceful degradation to human review",
+      "typical": true,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Henrik Laine",
+          "date_of_birth": "1986-10-25",
+          "address": "Hameenkatu 12 C 8, 33200 Tampere",
+          "expected_monthly_volume_eur": 2700
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "@@#%%!!~~ scan_error_0x00 ]]]===[[[ 9f8a7b6c partial bytes lost"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "HELEN OY\nELECTRICITY INVOICE\nCustomer: Henrik Laine\nService address: Hameenkatu 12 C 8, 33200 Tampere\nInvoice date: 09.06.2026\nIssuer: Helen Oy\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "escalate",
+        "decided_by": "human",
+        "escalation": true,
+        "reason_codes_include": [
+          "DEGRADED_TO_MANUAL"
+        ],
+        "fields": {}
+      }
+    },
+    {
+      "case_id": "hallucination-bait",
+      "description": "Extractor hallucination (injected): only the evaluator catches it",
+      "typical": false,
+      "package": {
+        "customer_type": "individual",
+        "applicant": {
+          "full_name": "Anna Virtanen",
+          "date_of_birth": "1991-03-14",
+          "address": "Kalevankatu 12 A 5, 00100 Helsinki",
+          "expected_monthly_volume_eur": 2400
+        },
+        "documents": [
+          {
+            "document_id": "doc-id",
+            "file_name": "id.pdf",
+            "text_content": "REPUBLIC OF FINLAND\nIDENTITY CARD\nFull name: Anja Wirtanen\nDate of birth: 14.03.1991\nDocument number: FIN-8842517\nDate of expiry: 01.05.2030\nNationality: FI\n\n[OCR-GLITCH:full_name=Anna Virtanen]"
+          },
+          {
+            "document_id": "doc-poa",
+            "file_name": "poa.pdf",
+            "text_content": "HELEN OY\nELECTRICITY INVOICE\nCustomer: Anna Virtanen\nService address: Kalevankatu 12 A 5, 00100 Helsinki\nInvoice date: 12.06.2026\nIssuer: Helen Oy\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "escalate",
+        "decided_by": "human",
+        "escalation": true,
+        "reason_codes_include": [
+          "CRITICAL_MISMATCH"
+        ],
+        "fields": {}
+      }
+    },
+    {
+      "case_id": "business-clean",
+      "description": "Typical clean business onboarding",
+      "typical": true,
+      "package": {
+        "customer_type": "business",
+        "applicant": {
+          "full_name": "Karl Tamm",
+          "address": "Tartu mnt 25, 10117 Tallinn",
+          "company_name": "Meridian Trade OU",
+          "registration_number": "EE-1447291",
+          "expected_monthly_volume_eur": 30000
+        },
+        "documents": [
+          {
+            "document_id": "doc-reg",
+            "file_name": "registration.pdf",
+            "text_content": "REPUBLIC OF ESTONIA — COMMERCIAL REGISTER\nCERTIFICATE OF REGISTRATION\nCompany name: Meridian Trade OU\nRegistration number: EE-1447291\nRegistration date: 01.02.2019\nLegal form: Osauhing (private limited company)\nRegistered office: Tartu mnt 25, 10117 Tallinn\n"
+          },
+          {
+            "document_id": "doc-ubo",
+            "file_name": "ubo.pdf",
+            "text_content": "UBO DECLARATION\nCompany name: Meridian Trade OU\nBeneficial owners:\n- Karl Tamm; born 12.07.1978; ownership 60%\n- Liis Kukk; born 25.09.1985; ownership 40%\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "approve",
+        "decided_by": "system",
+        "escalation": false,
+        "reason_codes_include": [
+          "ALL_CHECKS_PASSED"
+        ],
+        "fields": {
+          "doc-reg": {
+            "company_name": "Meridian Trade OU",
+            "registration_number": "EE-1447291",
+            "registration_date": "2019-02-01"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "business-clean-2",
+      "description": "Clean business onboarding",
+      "typical": true,
+      "package": {
+        "customer_type": "business",
+        "applicant": {
+          "full_name": "Aino Jarvinen",
+          "address": "Mannerheimintie 40 B, 00250 Helsinki",
+          "company_name": "Aurora Consulting Oy",
+          "registration_number": "FI-2093714",
+          "expected_monthly_volume_eur": 22000
+        },
+        "documents": [
+          {
+            "document_id": "doc-reg",
+            "file_name": "registration.pdf",
+            "text_content": "REPUBLIC OF ESTONIA — COMMERCIAL REGISTER\nCERTIFICATE OF REGISTRATION\nCompany name: Aurora Consulting Oy\nRegistration number: FI-2093714\nRegistration date: 14.09.2021\nLegal form: Osakeyhtio (limited company)\nRegistered office: Mannerheimintie 40 B, 00250 Helsinki\n"
+          },
+          {
+            "document_id": "doc-ubo",
+            "file_name": "ubo.pdf",
+            "text_content": "UBO DECLARATION\nCompany name: Aurora Consulting Oy\nBeneficial owners:\n- Aino Jarvinen; born 04.02.1984; ownership 100%\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "approve",
+        "decided_by": "system",
+        "escalation": false,
+        "reason_codes_include": [
+          "ALL_CHECKS_PASSED"
+        ],
+        "fields": {}
+      }
+    },
+    {
+      "case_id": "business-ubo-sanctions",
+      "description": "Beneficial owner matches the sanctions registry: mandatory escalation",
+      "typical": false,
+      "package": {
+        "customer_type": "business",
+        "applicant": {
+          "full_name": "Oskar Vaher",
+          "address": "Parnu mnt 105, 11312 Tallinn",
+          "company_name": "Nordic Bridge OU",
+          "registration_number": "EE-1899020",
+          "expected_monthly_volume_eur": 18000
+        },
+        "documents": [
+          {
+            "document_id": "doc-reg",
+            "file_name": "registration.pdf",
+            "text_content": "REPUBLIC OF ESTONIA — COMMERCIAL REGISTER\nCERTIFICATE OF REGISTRATION\nCompany name: Nordic Bridge OU\nRegistration number: EE-1899020\nRegistration date: 23.03.2017\nLegal form: Osauhing (private limited company)\nRegistered office: Parnu mnt 105, 11312 Tallinn\n"
+          },
+          {
+            "document_id": "doc-ubo",
+            "file_name": "ubo.pdf",
+            "text_content": "UBO DECLARATION\nCompany name: Nordic Bridge OU\nBeneficial owners:\n- Oskar Vaher; born 02.12.1980; ownership 55%\n- Viktor Salo; born 03.11.1969; ownership 45%\n"
+          }
+        ]
+      },
+      "expected": {
+        "outcome": "escalate",
+        "decided_by": "human",
+        "escalation": true,
+        "reason_codes_include": [
+          "UBO_SANCTIONS_OR_PEP"
+        ],
+        "fields": {}
+      }
+    }
+  ]
+}
