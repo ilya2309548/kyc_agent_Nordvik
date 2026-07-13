@@ -1,0 +1,544 @@
+{
+  "golden_set": "golden_set.json",
+  "runs": {
+    "full_pipeline": {
+      "summary": {
+        "cases": 17,
+        "field_accuracy": 1.0,
+        "auto_rate_typical": 0.7143,
+        "escalation_recall": 1.0,
+        "escalation_precision": 1.0,
+        "decision_accuracy": 1.0,
+        "reason_codes_accuracy": 1.0,
+        "false_auto_approvals": 0
+      },
+      "cases": [
+        {
+          "case_id": "clean-individual-1",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 9,
+          "field_correct": 9
+        },
+        {
+          "case_id": "clean-individual-2",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 9,
+          "field_correct": 9
+        },
+        {
+          "case_id": "clean-individual-3",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 5,
+          "field_correct": 5
+        },
+        {
+          "case_id": "clean-individual-4",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 5,
+          "field_correct": 5
+        },
+        {
+          "case_id": "clean-individual-5",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 5,
+          "field_correct": 5
+        },
+        {
+          "case_id": "address-mismatch-warning",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "expired-document",
+          "typical": true,
+          "expected_outcome": "reject",
+          "expected_escalation": false,
+          "predicted_outcome": "reject",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "DOCUMENT_EXPIRED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "incomplete-package",
+          "typical": true,
+          "expected_outcome": "reject",
+          "expected_escalation": false,
+          "predicted_outcome": "reject",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "INCOMPLETE_PACKAGE"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "name-mismatch-critical",
+          "typical": true,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "CRITICAL_MISMATCH"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "sanctions-hit",
+          "typical": true,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "SANCTIONS_HIT"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "pep-match",
+          "typical": false,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "PEP_MATCH"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "high-volume",
+          "typical": true,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "HIGH_VOLUME"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "corrupted-document",
+          "typical": true,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "DEGRADED_TO_MANUAL"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "hallucination-bait",
+          "typical": false,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "CRITICAL_MISMATCH",
+            "LOW_CONFIDENCE"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "business-clean",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 3,
+          "field_correct": 3
+        },
+        {
+          "case_id": "business-clean-2",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "business-ubo-sanctions",
+          "typical": false,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "UBO_SANCTIONS_OR_PEP"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        }
+      ]
+    },
+    "no_validator_ablation": {
+      "summary": {
+        "cases": 17,
+        "field_accuracy": 1.0,
+        "auto_rate_typical": 0.7143,
+        "escalation_recall": 0.8571,
+        "escalation_precision": 1.0,
+        "decision_accuracy": 0.9412,
+        "reason_codes_accuracy": 0.9412,
+        "false_auto_approvals": 1
+      },
+      "cases": [
+        {
+          "case_id": "clean-individual-1",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 9,
+          "field_correct": 9
+        },
+        {
+          "case_id": "clean-individual-2",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 9,
+          "field_correct": 9
+        },
+        {
+          "case_id": "clean-individual-3",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 5,
+          "field_correct": 5
+        },
+        {
+          "case_id": "clean-individual-4",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 5,
+          "field_correct": 5
+        },
+        {
+          "case_id": "clean-individual-5",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 5,
+          "field_correct": 5
+        },
+        {
+          "case_id": "address-mismatch-warning",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "expired-document",
+          "typical": true,
+          "expected_outcome": "reject",
+          "expected_escalation": false,
+          "predicted_outcome": "reject",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "DOCUMENT_EXPIRED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "incomplete-package",
+          "typical": true,
+          "expected_outcome": "reject",
+          "expected_escalation": false,
+          "predicted_outcome": "reject",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "INCOMPLETE_PACKAGE"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "name-mismatch-critical",
+          "typical": true,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "CRITICAL_MISMATCH"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "sanctions-hit",
+          "typical": true,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "SANCTIONS_HIT"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "pep-match",
+          "typical": false,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "PEP_MATCH"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "high-volume",
+          "typical": true,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "HIGH_VOLUME"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "corrupted-document",
+          "typical": true,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "DEGRADED_TO_MANUAL"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "hallucination-bait",
+          "typical": false,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": false,
+          "outcome_ok": false,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "business-clean",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 3,
+          "field_correct": 3
+        },
+        {
+          "case_id": "business-clean-2",
+          "typical": true,
+          "expected_outcome": "approve",
+          "expected_escalation": false,
+          "predicted_outcome": "approve",
+          "predicted_escalation": false,
+          "reason_codes": [
+            "ALL_CHECKS_PASSED"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        },
+        {
+          "case_id": "business-ubo-sanctions",
+          "typical": false,
+          "expected_outcome": "escalate",
+          "expected_escalation": true,
+          "predicted_outcome": "escalate",
+          "predicted_escalation": true,
+          "reason_codes": [
+            "UBO_SANCTIONS_OR_PEP"
+          ],
+          "reason_codes_ok": true,
+          "outcome_ok": true,
+          "field_total": 0,
+          "field_correct": 0
+        }
+      ]
+    }
+  }
+}
