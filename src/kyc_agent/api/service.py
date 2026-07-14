@@ -11,6 +11,7 @@ from typing import Any
 from uuid import uuid4
 
 import structlog
+from langchain_core.runnables import RunnableConfig
 from langgraph.errors import GraphRecursionError
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Command
@@ -42,11 +43,11 @@ class CaseService:
         self._context = context
         self._tasks: dict[str, asyncio.Task[None]] = {}
 
-    def _config(self, case_id: str) -> dict[str, Any]:
-        return {
-            "configurable": {"thread_id": case_id},
-            "recursion_limit": self._context.settings.graph_recursion_limit,
-        }
+    def _config(self, case_id: str) -> RunnableConfig:
+        return RunnableConfig(
+            configurable={"thread_id": case_id},
+            recursion_limit=self._context.settings.graph_recursion_limit,
+        )
 
     def submit(self, package: KYCPackage) -> str:
         case_id = uuid4().hex
@@ -58,7 +59,7 @@ class CaseService:
     async def _run(self, case_id: str, package: KYCPackage) -> None:
         try:
             await self._graph.ainvoke(
-                {"case_id": case_id, "package": package, "status": CaseStatus.RECEIVED},
+                KYCState(case_id=case_id, package=package, status=CaseStatus.RECEIVED),
                 config=self._config(case_id),
                 context=self._context,
             )
@@ -97,8 +98,9 @@ class CaseService:
         if not any(task.interrupts for task in snapshot.tasks):
             raise CaseNotAwaitingReviewError(case_id)
 
+        resume: Command[Any] = Command(resume=decision.model_dump())
         await self._graph.ainvoke(
-            Command(resume=decision.model_dump()),
+            resume,
             config=self._config(case_id),
             context=self._context,
         )

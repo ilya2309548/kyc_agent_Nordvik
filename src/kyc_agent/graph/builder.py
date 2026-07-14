@@ -20,7 +20,7 @@ from langgraph.graph.state import CompiledStateGraph
 
 from kyc_agent.graph import nodes
 from kyc_agent.graph.context import PipelineContext
-from kyc_agent.graph.state import KYCState
+from kyc_agent.graph.state import ExtractTask, KYCState
 
 
 def build_graph(
@@ -33,7 +33,14 @@ def build_graph(
     graph.add_node("intake", nodes.intake)
     graph.add_node("router", nodes.router)
     graph.add_node("orchestrator", nodes.orchestrator)
-    graph.add_node("extract_document", nodes.extract_document)
+    # Send-worker node: its input is the ExtractTask payload, not KYCState.
+    # langgraph's add_node overloads cannot express a worker whose input
+    # schema differs from the graph state, hence the targeted ignore.
+    graph.add_node(
+        "extract_document",
+        nodes.extract_document,  # type: ignore[call-overload]
+        input_schema=ExtractTask,
+    )
     graph.add_node("validator", nodes.validator)
     graph.add_node("risk_scorer", nodes.risk_scorer)
     graph.add_node("decision_gate", nodes.decision_gate)

@@ -8,11 +8,14 @@ uvicorn reads settings from the environment.
 import asyncio
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from fastapi import FastAPI, HTTPException, Request
 from langgraph.checkpoint.memory import MemorySaver
 from sse_starlette.sse import EventSourceResponse
+
+if TYPE_CHECKING:
+    from langgraph.checkpoint.base import BaseCheckpointSaver
 
 from kyc_agent.api.schemas import (
     AuditEventResponse,
@@ -44,6 +47,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         configure_logging()
         pool = None
         audit: AuditSink
+        checkpointer: "BaseCheckpointSaver[Any]"
         if app_settings.persistence_backend == "postgres":
             pool = create_pool(app_settings.database_url)
             checkpointer = await setup_postgres(pool)

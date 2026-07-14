@@ -58,5 +58,6 @@ python_version = "3.12"
 strict = true
 mypy_path = "src"
 packages = ["kyc_agent"]
+plugins = ["pydantic.mypy"]
 # LangChain/LangGraph ship partial type stubs; keep strictness for our own code.
 ignore_missing_imports = true

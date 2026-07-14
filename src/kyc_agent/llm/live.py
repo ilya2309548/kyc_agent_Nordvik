@@ -5,7 +5,7 @@ Provider-agnostic: models come from LangChain ``init_chat_model`` with
 structured output pinned to the Pydantic schemas from ``kyc_agent.schemas``.
 """
 
-from typing import Any
+from typing import Any, cast
 
 from langchain_core.language_models import BaseChatModel
 from pydantic import BaseModel, Field, create_model
@@ -63,7 +63,10 @@ class LiveRouter(RouterService):
         prompt = f"Customer type declared at registration: {customer_type}.\n\n" + "\n\n".join(
             blocks
         )
-        result = await self._model.ainvoke([("system", _ROUTER_SYSTEM), ("user", prompt)])
+        result = cast(
+            "_RouterOutput",
+            await self._model.ainvoke([("system", _ROUTER_SYSTEM), ("user", prompt)]),
+        )
         by_id = {c.document_id: c for c in result.classifications}
         classified: list[ClassifiedDocument] = []
         for doc in documents:
@@ -151,7 +154,10 @@ class LiveEvaluator(EvaluatorService):
             f"<document>\n{document.text_content[:_MAX_DOC_CHARS]}\n</document>\n\n"
             f"<extraction>\n{extraction.model_dump_json(indent=2)}\n</extraction>"
         )
-        report = await self._model.ainvoke([("system", _EVALUATOR_SYSTEM), ("user", prompt)])
+        report = cast(
+            "_GroundingReport",
+            await self._model.ainvoke([("system", _EVALUATOR_SYSTEM), ("user", prompt)]),
+        )
         return [
             RuleFlag(
                 rule_id=RuleId.EVALUATOR_DISCREPANCY,

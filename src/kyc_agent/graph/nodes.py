@@ -6,6 +6,7 @@ fan-out), so they may only write channels with additive reducers
 The case counts as degraded whenever ``degraded_reasons`` is non-empty.
 """
 
+from functools import partial
 from typing import Any, Literal
 
 import structlog
@@ -285,8 +286,8 @@ async def validator(
                 flags, errors = await run_resilient(
                     PipelineStep.VALIDATOR,
                     "validator",
-                    lambda d=document, e=extraction: ctx.services.evaluator.verify_grounding(d, e),
-                    lambda d=document, e=extraction: ctx.fallback.evaluator.verify_grounding(d, e),
+                    partial(ctx.services.evaluator.verify_grounding, document, extraction),
+                    partial(ctx.fallback.evaluator.verify_grounding, document, extraction),
                     ctx.settings.max_step_retries,
                 )
             except StepExhaustedError as exc:
@@ -364,7 +365,7 @@ async def _screen(
             found, _ = await run_resilient(
                 PipelineStep.RISK,
                 f"risk:{client.registry}",
-                lambda n=name: client.search(n),
+                partial(client.search, name),
                 None,
                 ctx.settings.max_step_retries,
             )

@@ -7,7 +7,7 @@ application start.
 """
 
 import json
-from typing import Any
+from typing import Any, cast
 
 from langgraph.checkpoint.postgres.aio import AsyncPostgresSaver
 from psycopg.rows import dict_row
@@ -78,5 +78,6 @@ class PostgresAuditSink:
                 "WHERE case_id = %s ORDER BY ts, id",
                 (case_id,),
             )
-            rows: list[dict[str, Any]] = await cursor.fetchall()
+            # The pool is created with row_factory=dict_row (see create_pool).
+            rows = cast("list[dict[str, Any]]", await cursor.fetchall())
         return [AuditEvent.model_validate(row) for row in rows]
