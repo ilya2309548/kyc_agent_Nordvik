@@ -47,7 +47,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         configure_logging()
         pool = None
         audit: AuditSink
-        checkpointer: "BaseCheckpointSaver[Any]"
+        checkpointer: BaseCheckpointSaver[Any]
         if app_settings.persistence_backend == "postgres":
             pool = create_pool(app_settings.database_url)
             checkpointer = await setup_postgres(pool)
