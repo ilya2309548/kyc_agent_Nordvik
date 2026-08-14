@@ -38,6 +38,12 @@ class Settings(BaseSettings):
         "fake:fallback", validation_alias=AliasChoices("MODEL_FALLBACK", "FALLBACK_MODEL")
     )
 
+    # --- Optional OpenAI-compatible gateway (e.g. OpenRouter) ---
+    # Passed to the openai provider so a gateway works without exporting
+    # shell env vars; ignored by every other provider.
+    openai_api_key: str | None = Field(None, validation_alias=AliasChoices("OPENAI_API_KEY"))
+    openai_base_url: str | None = Field(None, validation_alias=AliasChoices("OPENAI_BASE_URL"))
+
     # --- Bounded execution (SPEC 4.7) ---
     max_step_retries: int = 2
     graph_recursion_limit: int = 25

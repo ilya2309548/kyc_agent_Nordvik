@@ -8,7 +8,7 @@ structured output pinned to the Pydantic schemas from ``kyc_agent.schemas``.
 from typing import Any, cast
 
 from langchain_core.language_models import BaseChatModel
-from pydantic import BaseModel, Field, create_model
+from pydantic import BaseModel, Field
 
 from kyc_agent.llm.base import (
     EvaluatorService,
@@ -27,6 +27,22 @@ from kyc_agent.schemas.documents import (
 )
 
 _MAX_DOC_CHARS = 6_000  # hard cap per document to bound prompt size
+
+# Fixed confidence prior for any field the model extracts (SPEC 6.3): LLM
+# self-reported confidence is unreliable, so the real signal is the
+# deterministic validator formula, not this number.
+_EXTRACTED_FIELD_CONFIDENCE = 0.9
+
+
+def _structured(model: BaseChatModel, schema: type[BaseModel], method: str | None) -> Any:
+    """with_structured_output, honoring a provider-specific method override.
+
+    ``json_schema`` (strict response format) is far more robust with weak
+    OpenAI-compatible models than the default tool-calling path.
+    """
+    if method:
+        return model.with_structured_output(schema, method=method)
+    return model.with_structured_output(schema)
 
 
 class _DocClassification(BaseModel):
@@ -49,8 +65,8 @@ _ROUTER_SYSTEM = (
 
 
 class LiveRouter(RouterService):
-    def __init__(self, model: BaseChatModel) -> None:
-        self._model = model.with_structured_output(_RouterOutput)
+    def __init__(self, model: BaseChatModel, structured_method: str | None = None) -> None:
+        self._model = _structured(model, _RouterOutput, structured_method)
 
     async def classify(
         self, documents: list[InputDocument], customer_type: CustomerType
@@ -85,31 +101,31 @@ _EXTRACTOR_SYSTEM = (
     "You are a KYC field extractor. Extract fields from the document text "
     "into the given schema. Rules: use null for any field you cannot find "
     "verbatim in the document — never guess or infer; copy values exactly "
-    "as written; convert dates to ISO YYYY-MM-DD; report a confidence in "
-    "[0,1] for every extracted field."
+    "as written; convert dates to ISO YYYY-MM-DD."
 )
 
 
 class LiveExtractor(ExtractorService):
-    def __init__(self, model: BaseChatModel) -> None:
+    def __init__(self, model: BaseChatModel, structured_method: str | None = None) -> None:
         self._model = model
+        self._method = structured_method
 
     async def extract(self, document: InputDocument, doc_type: DocumentType) -> ExtractionResult:
         schema = EXTRACTION_SCHEMA_BY_TYPE[doc_type]
-        wrapper = create_model(
-            f"{schema.__name__}Envelope",
-            fields=(schema, ...),
-            field_confidence=(dict[str, float], Field(default_factory=dict)),
+        structured = _structured(self._model, schema, self._method)
+        result = cast(
+            "BaseModel",
+            await structured.ainvoke(
+                [
+                    ("system", _EXTRACTOR_SYSTEM),
+                    (
+                        "user",
+                        f"Document type: {doc_type}\n\n{document.text_content[:_MAX_DOC_CHARS]}",
+                    ),
+                ]
+            ),
         )
-        structured = self._model.with_structured_output(wrapper)
-        result: Any = await structured.ainvoke(
-            [
-                ("system", _EXTRACTOR_SYSTEM),
-                ("user", f"Document type: {doc_type}\n\n{document.text_content[:_MAX_DOC_CHARS]}"),
-            ]
-        )
-        extracted: BaseModel = result.fields
-        fields = {k: v for k, v in extracted.model_dump(mode="json").items() if v is not None}
+        fields = {k: v for k, v in result.model_dump(mode="json").items() if v is not None}
         if not fields:
             return ExtractionResult(
                 document_id=document.document_id,
@@ -120,7 +136,7 @@ class LiveExtractor(ExtractorService):
             document_id=document.document_id,
             doc_type=doc_type,
             fields=fields,
-            field_confidence={k: v for k, v in result.field_confidence.items() if k in fields},
+            field_confidence=dict.fromkeys(fields, _EXTRACTED_FIELD_CONFIDENCE),
         )
 
 
@@ -144,8 +160,8 @@ _EVALUATOR_SYSTEM = (
 
 
 class LiveEvaluator(EvaluatorService):
-    def __init__(self, model: BaseChatModel) -> None:
-        self._model = model.with_structured_output(_GroundingReport)
+    def __init__(self, model: BaseChatModel, structured_method: str | None = None) -> None:
+        self._model = _structured(model, _GroundingReport, structured_method)
 
     async def verify_grounding(
         self, document: InputDocument, extraction: ExtractionResult
